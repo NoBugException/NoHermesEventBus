@@ -1,97 +1,98 @@
 package com.example.nohermeseventbus.message;
 
-public interface IEventMessage extends android.os.IInterface
-{
-  /** Default implementation for IEventMessage. */
-  public static class Default implements com.example.nohermeseventbus.message.IEventMessage
-  {
-    @Override public com.example.nohermeseventbus.message.EventMessage getEventMessage() throws android.os.RemoteException
-    {
-      return null;
-    }
-    @Override
-    public android.os.IBinder asBinder() {
-      return null;
-    }
-  }
-  /** Local-side IPC implementation stub class. */
-  public static abstract class Stub extends android.os.Binder implements com.example.nohermeseventbus.message.IEventMessage
-  {
-    private static final java.lang.String DESCRIPTOR = "com.example.nohermeseventbus.message.IEventMessage";
-    /** Construct the stub at attach it to the interface. */
-    public Stub()
-    {
+import android.os.Binder;
+import android.os.IBinder;
+import android.os.IInterface;
+import android.os.Parcel;
+import android.os.RemoteException;
+
+public interface IEventMessage extends IInterface {
+
+  public static abstract class Stub extends Binder implements IEventMessage {
+
+    private static final String DESCRIPTOR = "com.example.nohermeseventbus.message.IEventMessage";
+
+    public Stub() {
       this.attachInterface(this, DESCRIPTOR);
     }
+
+
     /**
-     * Cast an IBinder object into an com.example.nohermeseventbus.message.IEventMessage interface,
-     * generating a proxy if needed.
+     * 生成代理
+     * @param obj
+     * @return
      */
-    public static com.example.nohermeseventbus.message.IEventMessage asInterface(android.os.IBinder obj)
-    {
-      if ((obj==null)) {
+    public static IEventMessage asInterface(IBinder obj) {
+
+      if (obj == null)
         return null;
+
+      IInterface iin = obj.queryLocalInterface(DESCRIPTOR);
+      if (iin!=null && iin instanceof IEventMessage) {
+        return (IEventMessage)iin;
       }
-      android.os.IInterface iin = obj.queryLocalInterface(DESCRIPTOR);
-      if (((iin!=null)&&(iin instanceof com.example.nohermeseventbus.message.IEventMessage))) {
-        return ((com.example.nohermeseventbus.message.IEventMessage)iin);
-      }
-      return new com.example.nohermeseventbus.message.IEventMessage.Stub.Proxy(obj);
+      return new Proxy(obj);
     }
-    @Override public android.os.IBinder asBinder()
-    {
+
+    /**
+     * 获取Binder对象
+     * @return
+     */
+    @Override
+    public IBinder asBinder() {
       return this;
     }
-    @Override public boolean onTransact(int code, android.os.Parcel data, android.os.Parcel reply, int flags) throws android.os.RemoteException
-    {
-      java.lang.String descriptor = DESCRIPTOR;
-      switch (code)
-      {
-        case INTERFACE_TRANSACTION:
-        {
+
+    @Override
+    public boolean onTransact(int code, Parcel data, Parcel reply, int flags) throws RemoteException {
+      String descriptor = DESCRIPTOR;
+      switch (code) {
+        case INTERFACE_TRANSACTION: {
           reply.writeString(descriptor);
           return true;
         }
-        case TRANSACTION_getEventMessage:
-        {
+        case TRANSACTION_getEventMessage: {
           data.enforceInterface(descriptor);
-          com.example.nohermeseventbus.message.EventMessage _result = this.getEventMessage();
+          EventMessage _result = this.getEventMessage();
           reply.writeNoException();
           if ((_result!=null)) {
             reply.writeInt(1);
             _result.writeToParcel(reply, android.os.Parcelable.PARCELABLE_WRITE_RETURN_VALUE);
-          }
-          else {
+          } else {
             reply.writeInt(0);
           }
           return true;
         }
         default:
-        {
           return super.onTransact(code, data, reply, flags);
-        }
       }
     }
-    private static class Proxy implements com.example.nohermeseventbus.message.IEventMessage
-    {
-      private android.os.IBinder mRemote;
-      Proxy(android.os.IBinder remote)
-      {
+
+    /**
+     * 代理类
+     */
+    private static class Proxy implements IEventMessage {
+
+      private IBinder mRemote;
+      Proxy(IBinder remote) {
         mRemote = remote;
       }
-      @Override public android.os.IBinder asBinder()
-      {
+
+      @Override
+      public IBinder asBinder() {
         return mRemote;
       }
-      public java.lang.String getInterfaceDescriptor()
-      {
+
+
+      public String getInterfaceDescriptor() {
         return DESCRIPTOR;
       }
-      @Override public com.example.nohermeseventbus.message.EventMessage getEventMessage() throws android.os.RemoteException
-      {
-        android.os.Parcel _data = android.os.Parcel.obtain();
-        android.os.Parcel _reply = android.os.Parcel.obtain();
-        com.example.nohermeseventbus.message.EventMessage _result;
+
+      @Override
+      public EventMessage getEventMessage() throws RemoteException {
+        Parcel _data = Parcel.obtain();
+        Parcel _reply = Parcel.obtain();
+        EventMessage _result;
         try {
           _data.writeInterfaceToken(DESCRIPTOR);
           boolean _status = mRemote.transact(Stub.TRANSACTION_getEventMessage, _data, _reply, 0);
@@ -100,7 +101,7 @@ public interface IEventMessage extends android.os.IInterface
           }
           _reply.readException();
           if ((0!=_reply.readInt())) {
-            _result = com.example.nohermeseventbus.message.EventMessage.CREATOR.createFromParcel(_reply);
+            _result = EventMessage.CREATOR.createFromParcel(_reply);
           }
           else {
             _result = null;
@@ -112,9 +113,11 @@ public interface IEventMessage extends android.os.IInterface
         }
         return _result;
       }
-      public static com.example.nohermeseventbus.message.IEventMessage sDefaultImpl;
+      public static IEventMessage sDefaultImpl;
     }
-    static final int TRANSACTION_getEventMessage = (android.os.IBinder.FIRST_CALL_TRANSACTION + 0);
+
+    static final int TRANSACTION_getEventMessage = (IBinder.FIRST_CALL_TRANSACTION + 0);
+
     public static boolean setDefaultImpl(com.example.nohermeseventbus.message.IEventMessage impl) {
       if (Stub.Proxy.sDefaultImpl == null && impl != null) {
         Stub.Proxy.sDefaultImpl = impl;
@@ -122,9 +125,11 @@ public interface IEventMessage extends android.os.IInterface
       }
       return false;
     }
+
     public static com.example.nohermeseventbus.message.IEventMessage getDefaultImpl() {
       return Stub.Proxy.sDefaultImpl;
     }
   }
-  public com.example.nohermeseventbus.message.EventMessage getEventMessage() throws android.os.RemoteException;
+
+  public EventMessage getEventMessage() throws RemoteException;
 }
