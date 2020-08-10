@@ -1,2 +1,3 @@
 rootProject.name='NoHermesEventBus'
 include ':app'
+include ':hermes'

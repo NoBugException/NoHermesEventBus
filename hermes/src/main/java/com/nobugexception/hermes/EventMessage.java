@@ -1,16 +1,11 @@
-package com.example.nohermeseventbus.message;
+package com.nobugexception.hermes;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 public class EventMessage implements Parcelable {
 
-    private String eventName;
-
-    public EventMessage(){}
-
     protected EventMessage(Parcel in) {
-        eventName = in.readString();
     }
 
     public static final Creator<EventMessage> CREATOR = new Creator<EventMessage>() {
@@ -25,14 +20,6 @@ public class EventMessage implements Parcelable {
         }
     };
 
-    public String getEventName() {
-        return eventName;
-    }
-
-    public void setEventName(String eventName) {
-        this.eventName = eventName;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -40,6 +27,5 @@ public class EventMessage implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(eventName);
     }
 }
